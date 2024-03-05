@@ -16,9 +16,16 @@ describe('Pokémon Search', () => {
     cy.intercept('/pokemon-search/api?*').as('api');
   });
 
-  it('should call the API when the user types', () => {});
+  it('should call the API when the user types', () => {
+    cy.get('@search').type('ivy');
+    cy.wait('@api');
+  });
 
-  it('should update the query parameter', () => {});
+  it('should update the query parameter', () => {
+    cy.get('@search').type('squir');
+    cy.wait('@api');
+    cy.location('search').should('equal', '?name=squir');
+  });
 
   it('should call the API with correct query parameter', () => {});
 
