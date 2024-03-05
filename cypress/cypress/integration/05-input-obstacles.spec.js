@@ -13,34 +13,40 @@ describe('Input obstacles', () => {
   });
 
   it('should control a select input', () => {
-    cy.get('[data-test="select-input"]');
-    cy.get('[data-test="select-result"]');
+    const selectedValue = 'Hulk';
+    cy.get('[data-test="select-input"]').select(selectedValue);
+    cy.get('[data-test="select-result"]').contains(selectedValue);
   });
 
   it('should find and control a checkbox input', () => {
-    cy.get('[data-test="checkbox-tomato"]');
     cy.get('[data-test="checkbox-result"]').contains('(None)');
-    cy.get('[data-test="checkbox-result"]');
+    cy.get('[data-test="checkbox-tomato"]').check().invoke('val').as('selected');
+    cy.get('@selected').then((selected) => {
+      cy.get('[data-test="checkbox-result"]').contains(selected);
+    });
   });
 
   it('should find and control a radio input', () => {
-    cy.get('[data-test="radio-ringo"]');
-    cy.get('[data-test="radio-result"]');
+    cy.get('[data-test="radio-ringo"]').check();
+    cy.get('[data-test="radio-result"]').contains('Ringo');
   });
 
   it('should find and control a color input', () => {
-    cy.get('[data-test="color-input"]');
-    cy.get('[data-test="color-result"]');
+    const color = '#00ffe1';
+    cy.get('[data-test="color-input"]').invoke('val', color).trigger('input');
+    cy.get('[data-test="color-result"]').contains(color);
   });
 
   it('should find and control a date input', () => {
-    cy.get('[data-test="date-input"]');
-    cy.get('[data-test="date-result"]');
+    const date = '1999-12-31';
+    cy.get('[data-test="date-input"]').type(date);
+    cy.get('[data-test="date-result"]').contains(date);
   });
 
   it('should find and control a range input', () => {
-    cy.get('[data-test="range-input"]');
-    cy.get('[data-test="range-result"]');
+    const range = 6;
+    cy.get('[data-test="range-input"]').invoke('val', range).trigger('change');
+    cy.get('[data-test="range-result"]').contains(range);
   });
 
   it('should find and control a file input', () => {
